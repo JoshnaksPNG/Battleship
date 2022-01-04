@@ -139,8 +139,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ai.cpp" />
     <ClCompile Include="Battleship.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MatrixWrite.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Ai.h" />
+    <ClInclude Include="Battleship.h" />
+    <ClInclude Include="MatrixWrite.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
