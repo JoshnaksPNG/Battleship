@@ -3,6 +3,7 @@
 //Header Inclusion
 #include <iostream>
 #include <string>
+#include <vector>
 
 //Ship Class
 class Ship 
@@ -25,7 +26,7 @@ class Ship
 class Battleship : public Ship
 {
     public:
-        char shape[1][4] = { { 'O', 'O', 'O', 'O' } };
+        std::vector<std::vector<char>> shape = { { 'O', 'O', 'O', 'O' } };
         int width = 1;
         int length = 4;
 };
@@ -34,7 +35,7 @@ class Battleship : public Ship
 class Cruiser : public Ship
 {
     public:
-        char shape[1][3] = { { 'O', 'O', 'O' } };
+        std::vector<std::vector<char>> shape = { { 'O', 'O', 'O' } };
         int width = 1;
         int length = 3;
 };
@@ -43,7 +44,7 @@ class Cruiser : public Ship
 class Submarine : public Ship
 {
     public:
-        char shape[1][3] = { { 'O', 'O', 'O' } };
+        std::vector<std::vector<char>> shape = { { 'O', 'O', 'O' } };
         int width = 1;
         int length = 3;
 };
@@ -52,7 +53,7 @@ class Submarine : public Ship
 class Destroyer : public Ship
 {
     public:
-        char shape[1][2] = { { 'O', 'O' } };
+        std::vector<std::vector<char>> shape = { { 'O', 'O' } };
         int width = 1;
         int length = 2;
 };
@@ -61,7 +62,7 @@ class Destroyer : public Ship
 class Carrier : public Ship
 {
     public:
-        char shape[2][3] = { { 'O', 'O', 'O' } , {'O', 'O', '_'} };
+        std::vector<std::vector<char>> shape = { { 'O', 'O', 'O' } , {'O', 'O', '_'} };
         int width = 1;
         int length = 3;
 };
@@ -69,11 +70,11 @@ class Carrier : public Ship
 //Namespace for Game Variables and Methods
 namespace battleshipGame
 {
-    extern int score[2];
+    extern std::vector<int> score;
 
     extern bool gameOver;
 
-    extern char board[8][8];
+    extern std::vector<std::vector<char>> board;
 
     extern std::string boardString;
 
