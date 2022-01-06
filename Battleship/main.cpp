@@ -12,14 +12,21 @@ int main()
     {
         {1,2,3},
         {4,5,6},
-        {7,8,9}
+        {7,8,9},
+        {1,2,3}
     };
 
     vector<vector<int>> Garbage =
     {
-        {1,2,3},
-        {4,5,6},
-        {7,8,9}
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0}
     };
     /**battleshipGame::updateBoardString();
     cout << battleshipGame::boardString;**/
@@ -29,7 +36,7 @@ int main()
         battleshipGame::gameOver = true;
     }**/
     
-    vector<vector<int>> newBruh = matrixwrite::matrixWriteInt(Garbage, bruh, 0, 0, 3);
+    vector<vector<int>> newBruh = matrixwrite::matrixWriteInt(Garbage, bruh, 2, 3, 3);
 
     
     cout << "Entered vector is : " << endl;

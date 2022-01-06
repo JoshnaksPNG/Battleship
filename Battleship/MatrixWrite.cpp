@@ -6,10 +6,22 @@ namespace matrixwrite
 	//Write a vector or matrix onto a matrix
 	std::vector<std::vector<int>> matrixWriteInt(std::vector<std::vector<int>> largeMatrix, std::vector<std::vector<int>> smallMatrix, int inX, int inY, int inTheta)
 	{
+		//Correct inTheta
+		if (inTheta != 1 && inTheta != 2 && inTheta != 3)
+		{
+			inTheta = 0;
+		}
+
 		//Check Dimensions
 		if (smallMatrix.size() > largeMatrix.size() || smallMatrix.size() > largeMatrix[0].size() || smallMatrix[0].size() > largeMatrix.size() || smallMatrix[0].size() > largeMatrix[0].size())
 		{
 			//I do not know how to throw errors in C++ :(
+		}
+
+		//Check Position
+		if (((inTheta == 1 || inTheta == 3) && ((inX + smallMatrix.size()) > largeMatrix[0].size() || (inY + smallMatrix[0].size()) > largeMatrix.size())) || ((inTheta == 1 || inTheta == 3) && ((inY + smallMatrix.size()) > largeMatrix.size() || (inX + smallMatrix[0].size()) > largeMatrix[0].size())))
+		{
+			//I still do not know how to throw errors in C++
 		}
 
 		//Write Big Bucket
@@ -63,7 +75,15 @@ namespace matrixwrite
 		}
 
 		//Rotated Matrix Bucket
-		std::vector<std::vector<int>> smallBucket = smallMatrix;
+		std::vector<std::vector<int>> smallBucket = {};
+		for (int i = 0; i < newSLength; ++i)
+		{
+			smallBucket.push_back({});
+			for (int j = 0; j < newSWidth; ++j)
+			{
+				smallBucket[i].push_back(0);
+			}
+		}
 
 		//Write to Rotated Bucket
 		switch (inTheta)
@@ -109,7 +129,16 @@ namespace matrixwrite
 				break;
 		}
 
-		return smallBucket;
+		//Write Small onto Large
+		for (int i = 0; i < smallBucket.size(); ++i)
+		{
+			for (int j = 0; j < smallBucket[0].size(); ++j)
+			{
+				largeBucket[i + inY][j + inX] = smallBucket[i][j];
+			}
+		}
+
+		return largeBucket;
 	};
 
 	bool matrixWriteBool(bool largeMatrix, bool smallMatrix, int inX, int inY, int inTheta, int largeWidth, int largeLength, int smallWidth, int smallLength)
