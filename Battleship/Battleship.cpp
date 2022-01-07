@@ -5,9 +5,13 @@
 //Namespace for Game Variables and Methods
 namespace battleshipGame
 {
-    std::vector<int> score = { 0, 0 };
+    //Players
+    typedef std::unique_ptr<Player> PlayerPtr;
+    std::vector<int> players;
 
     bool gameOver = false;
+
+    int turn = -5;
 
     std::vector<std::vector<int>> board =
     {
@@ -55,5 +59,54 @@ namespace battleshipGame
         boardString = updatedString;
 
         return "";
+    }
+
+    int nextTurn()
+    {
+        //Setup Turns
+        if (turn < 0)
+        {
+            setupTurn();
+        }
+        return 0;
+    }
+
+    int setupTurn()
+    {
+        //Placing Different Ships
+        switch (turn)
+        {
+            case -5:
+
+                break;
+
+            case -4:
+
+                break;
+
+            case -3:
+
+                break;
+
+            case -2:
+
+                break;
+
+            case -1:
+
+                break;
+
+            default:
+                break;
+        }
+
+        ++turn;
+        return 0;
+    }
+
+    int placeShip(std::string input, int angle, int player)
+    {
+        //Get int Coordinates from "A1" "2C" "B 5" sort of input
+        return 0;
     }
 }

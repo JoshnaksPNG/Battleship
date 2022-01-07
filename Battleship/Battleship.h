@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory>
 
 //Ship Class
 class Ship 
@@ -108,16 +109,75 @@ class Carrier : public Ship
         int length = 3;
 };
 
+class Player
+{
+    public:
+        //Player Score
+        int score = 0;
+
+        //Hits and Misses
+        std::vector<std::vector<int>> misses = {};
+        std::vector<std::vector<int>> hits = {};
+
+        //Player Ships
+        typedef std::unique_ptr<Ship> ShipPtr;
+        std::vector<ShipPtr> ships;
+
+        //Boards
+        std::vector<std::vector<int>> playerBoard =
+        {
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0}
+        };
+        std::string playerBString;
+        std::vector<std::vector<int>> opponentBoard =
+        {
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0}
+        };
+        std::string opponentBString;
+};
+
 //Namespace for Game Variables and Methods
 namespace battleshipGame
 {
-    extern std::vector<int> score;
+    typedef std::unique_ptr<Player> PlayerPtr;
 
+    extern std::vector<int> players;
+
+    // ships.push_back(std::make_unique<Ship>(constructor_args...));
+    /*
+        for (auto& pShip : ships)
+        {
+            pShip->Foo();
+            Bar(*pShip);
+        }
+    */
     extern bool gameOver;
 
     extern std::vector<std::vector<int>> board;
 
     extern std::string boardString;
+
+    extern int turn;
+    
+    int nextTurn();
+
+    int setupTurn();
+
+    int placeShip(std::string input, int angle, int player);
 
     std::string updateBoardString();
 }

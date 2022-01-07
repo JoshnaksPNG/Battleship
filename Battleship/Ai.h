@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Battleship.h"
+
 namespace ai
 {
 	
@@ -7,11 +9,12 @@ namespace ai
 
 }
 
-class COMPlayer
+class COMPlayer : public Player
 {
-	char direction;
+	public:
+		char direction;
 
-	char attempts[8][8];
+		char attempts[8][8];
 
-	int lastHit[2];
+		int lastHit[2];
 };
