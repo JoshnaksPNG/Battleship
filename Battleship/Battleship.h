@@ -26,7 +26,15 @@ class Ship
 class Battleship : public Ship
 {
     public:
-        std::vector<std::vector<char>> shape = { { 'O', 'O', 'O', 'O' } };
+        Battleship(int xPos, int yPos, int angle) : Ship(xPos, yPos, angle)
+        {
+            
+        }
+
+        std::vector<std::vector<int>> shape =
+        {
+            {1,1,1,1}
+        };
         int width = 1;
         int length = 4;
 };
@@ -35,7 +43,15 @@ class Battleship : public Ship
 class Cruiser : public Ship
 {
     public:
-        std::vector<std::vector<char>> shape = { { 'O', 'O', 'O' } };
+        Cruiser(int xPos, int yPos, int angle) : Ship(xPos, yPos, angle)
+        {
+
+        }
+
+        std::vector<std::vector<int>> shape = 
+        { 
+            {1,1,1} 
+        };
         int width = 1;
         int length = 3;
 };
@@ -44,7 +60,15 @@ class Cruiser : public Ship
 class Submarine : public Ship
 {
     public:
-        std::vector<std::vector<char>> shape = { { 'O', 'O', 'O' } };
+        Submarine(int xPos, int yPos, int angle) : Ship(xPos, yPos, angle)
+        {
+
+        }
+
+        std::vector<std::vector<int>> shape = 
+        { 
+            {1,1,1} 
+        };
         int width = 1;
         int length = 3;
 };
@@ -53,7 +77,15 @@ class Submarine : public Ship
 class Destroyer : public Ship
 {
     public:
-        std::vector<std::vector<char>> shape = { { 'O', 'O' } };
+        Destroyer(int xPos, int yPos, int angle) : Ship(xPos, yPos, angle)
+        {
+
+        }
+
+        std::vector<std::vector<int>> shape = 
+        { 
+            {1,1} 
+        };
         int width = 1;
         int length = 2;
 };
@@ -62,7 +94,16 @@ class Destroyer : public Ship
 class Carrier : public Ship
 {
     public:
-        std::vector<std::vector<char>> shape = { { 'O', 'O', 'O' } , {'O', 'O', '_'} };
+        Carrier(int xPos, int yPos, int angle) : Ship(xPos, yPos, angle)
+        {
+
+        }
+
+        std::vector<std::vector<int>> shape = 
+        { 
+            {1,1,1}, 
+            {1,1,0} 
+        };
         int width = 1;
         int length = 3;
 };
@@ -74,7 +115,7 @@ namespace battleshipGame
 
     extern bool gameOver;
 
-    extern std::vector<std::vector<char>> board;
+    extern std::vector<std::vector<int>> board;
 
     extern std::string boardString;
 

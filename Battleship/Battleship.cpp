@@ -9,16 +9,16 @@ namespace battleshipGame
 
     bool gameOver = false;
 
-    std::vector<std::vector<char>> board =
+    std::vector<std::vector<int>> board =
     {
-        {'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o'},
-        {'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o'},
-        {'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o'},
-        {'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o'},
-        {'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o'},
-        {'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o'},
-        {'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o'},
-        {'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o'}
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0}
     };
 
     std::string boardString;
@@ -36,7 +36,7 @@ namespace battleshipGame
             //Update each character of updated line
             for (int j = 0; j < 8; ++j)
             {
-                newRow += board[i][j];
+                newRow += std::to_string(board[i][j]);
                 
                 if (j != 7)
                 {

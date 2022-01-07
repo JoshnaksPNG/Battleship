@@ -18,32 +18,8 @@ namespace matrixwrite
 			//I do not know how to throw errors in C++ :(
 		}
 
-		//Check Position
-		if (((inTheta == 1 || inTheta == 3) && ((inX + smallMatrix.size()) > largeMatrix[0].size() || (inY + smallMatrix[0].size()) > largeMatrix.size())) || ((inTheta == 1 || inTheta == 3) && ((inY + smallMatrix.size()) > largeMatrix.size() || (inX + smallMatrix[0].size()) > largeMatrix[0].size())))
-		{
-			//I still do not know how to throw errors in C++
-		}
-
 		//Write Big Bucket
 		std::vector<std::vector<int>> largeBucket = largeMatrix;
-
-		//Boundaries for position
-		if (inX < 0)
-		{
-			inX = 0;
-		}
-		if (inX >= largeMatrix[0].size())
-		{
-			inX = (largeMatrix[0].size() - 1);
-		}
-		if (inY < 0)
-		{
-			inY = 0;
-		}
-		if (inY >= largeMatrix.size())
-		{
-			inY = (largeMatrix.size() - 1);
-		}
 
 		//Rotated Small Matrix Dimensions
 		int newSWidth;
@@ -83,6 +59,24 @@ namespace matrixwrite
 			{
 				smallBucket[i].push_back(0);
 			}
+		}
+
+		//Boundaries for position
+		if (inX < 0)
+		{
+			inX = 0;
+		}
+		if (inX >= largeMatrix[0].size())
+		{
+			inX = (largeMatrix[0].size() - smallBucket[0].size());
+		}
+		if (inY < 0)
+		{
+			inY = 0;
+		}
+		if (inY >= largeMatrix.size())
+		{
+			inY = (largeMatrix.size() - smallBucket.size());
 		}
 
 		//Write to Rotated Bucket
@@ -141,25 +135,528 @@ namespace matrixwrite
 		return largeBucket;
 	};
 
-	bool matrixWriteBool(bool largeMatrix, bool smallMatrix, int inX, int inY, int inTheta, int largeWidth, int largeLength, int smallWidth, int smallLength)
+	std::vector<std::vector<bool>> matrixWriteBool(std::vector<std::vector<bool>> largeMatrix, std::vector<std::vector<bool>> smallMatrix, int inX, int inY, int inTheta)
 	{
-		return true;
+		//Correct inTheta
+		if (inTheta != 1 && inTheta != 2 && inTheta != 3)
+		{
+			inTheta = 0;
+		}
+
+		//Check Dimensions
+		if (smallMatrix.size() > largeMatrix.size() || smallMatrix.size() > largeMatrix[0].size() || smallMatrix[0].size() > largeMatrix.size() || smallMatrix[0].size() > largeMatrix[0].size())
+		{
+			//I do not know how to throw errors in C++ :(
+		}
+
+		//Write Big Bucket
+		std::vector<std::vector<bool>> largeBucket = largeMatrix;
+
+		//Rotated Small Matrix Dimensions
+		int newSWidth;
+		int newSLength;
+		switch (inTheta)
+		{
+		case 1:
+			newSWidth = smallMatrix.size();
+			newSLength = smallMatrix[0].size();
+			break;
+
+
+		case 2:
+			newSWidth = smallMatrix[0].size();
+			newSLength = smallMatrix.size();
+			break;
+
+
+		case 3:
+			newSWidth = smallMatrix.size();
+			newSLength = smallMatrix[0].size();
+			break;
+
+
+		default:
+			newSWidth = smallMatrix[0].size();
+			newSLength = smallMatrix.size();
+			break;
+		}
+
+		//Rotated Matrix Bucket
+		std::vector<std::vector<bool>> smallBucket = {};
+		for (int i = 0; i < newSLength; ++i)
+		{
+			smallBucket.push_back({});
+			for (int j = 0; j < newSWidth; ++j)
+			{
+				smallBucket[i].push_back(0);
+			}
+		}
+
+		//Boundaries for position
+		if (inX < 0)
+		{
+			inX = 0;
+		}
+		if (inX >= largeMatrix[0].size())
+		{
+			inX = (largeMatrix[0].size() - smallBucket[0].size());
+		}
+		if (inY < 0)
+		{
+			inY = 0;
+		}
+		if (inY >= largeMatrix.size())
+		{
+			inY = (largeMatrix.size() - smallBucket.size());
+		}
+
+		//Write to Rotated Bucket
+		switch (inTheta)
+		{
+		case 1:
+			//Flip that sucker sideways (new Y = old x; new x = reverse Y)
+			for (int i = 0; i < newSLength; ++i)
+			{
+				for (int j = 0; j < newSWidth; ++j)
+				{
+					smallBucket[i][j] = smallMatrix[(newSWidth - j) - 1][i];
+				}
+			}
+			break;
+
+
+		case 2:
+			//Flip that sucker upside Down
+			for (int i = 0; i < newSLength; ++i)
+			{
+				for (int j = 0; j < newSWidth; ++j)
+				{
+					smallBucket[i][j] = smallMatrix[(newSLength - i) - 1][(newSWidth - j) - 1];
+				}
+			}
+			break;
+
+
+		case 3:
+			//Flip that sucker sideways the other way (new x = old y?; new y = reverse x?)
+			for (int i = 0; i < newSLength; ++i)
+			{
+				for (int j = 0; j < newSWidth; ++j)
+				{
+					smallBucket[i][j] = smallMatrix[j][(newSLength - i) - 1];
+				}
+			}
+			break;
+
+
+		default:
+			smallBucket = smallMatrix;
+			break;
+		}
+
+		//Write Small onto Large
+		for (int i = 0; i < smallBucket.size(); ++i)
+		{
+			for (int j = 0; j < smallBucket[0].size(); ++j)
+			{
+				largeBucket[i + inY][j + inX] = smallBucket[i][j];
+			}
+		}
+
+		return largeBucket;
 	};
 
-	char matrixWriteChar(char largeMatrix, char smallMatrix, int inX, int inY, int inTheta, int largeWidth, int largeLength, int smallWidth, int smallLength)
+	std::vector<std::vector<char>> matrixWriteChar(std::vector<std::vector<char>> largeMatrix, std::vector<std::vector<char>> smallMatrix, int inX, int inY, int inTheta)
 	{
+		//Correct inTheta
+		if (inTheta != 1 && inTheta != 2 && inTheta != 3)
+		{
+			inTheta = 0;
+		}
 
-		return '_';
+		//Check Dimensions
+		if (smallMatrix.size() > largeMatrix.size() || smallMatrix.size() > largeMatrix[0].size() || smallMatrix[0].size() > largeMatrix.size() || smallMatrix[0].size() > largeMatrix[0].size())
+		{
+			//I do not know how to throw errors in C++ :(
+		}
+
+		//Write Big Bucket
+		std::vector<std::vector<char>> largeBucket = largeMatrix;
+
+		//Rotated Small Matrix Dimensions
+		int newSWidth;
+		int newSLength;
+		switch (inTheta)
+		{
+		case 1:
+			newSWidth = smallMatrix.size();
+			newSLength = smallMatrix[0].size();
+			break;
+
+
+		case 2:
+			newSWidth = smallMatrix[0].size();
+			newSLength = smallMatrix.size();
+			break;
+
+
+		case 3:
+			newSWidth = smallMatrix.size();
+			newSLength = smallMatrix[0].size();
+			break;
+
+
+		default:
+			newSWidth = smallMatrix[0].size();
+			newSLength = smallMatrix.size();
+			break;
+		}
+
+		//Rotated Matrix Bucket
+		std::vector<std::vector<char>> smallBucket = {};
+		for (int i = 0; i < newSLength; ++i)
+		{
+			smallBucket.push_back({});
+			for (int j = 0; j < newSWidth; ++j)
+			{
+				smallBucket[i].push_back(0);
+			}
+		}
+
+		//Boundaries for position
+		if (inX < 0)
+		{
+			inX = 0;
+		}
+		if (inX >= largeMatrix[0].size())
+		{
+			inX = (largeMatrix[0].size() - smallBucket[0].size());
+		}
+		if (inY < 0)
+		{
+			inY = 0;
+		}
+		if (inY >= largeMatrix.size())
+		{
+			inY = (largeMatrix.size() - smallBucket.size());
+		}
+
+		//Write to Rotated Bucket
+		switch (inTheta)
+		{
+		case 1:
+			//Flip that sucker sideways (new Y = old x; new x = reverse Y)
+			for (int i = 0; i < newSLength; ++i)
+			{
+				for (int j = 0; j < newSWidth; ++j)
+				{
+					smallBucket[i][j] = smallMatrix[(newSWidth - j) - 1][i];
+				}
+			}
+			break;
+
+
+		case 2:
+			//Flip that sucker upside Down
+			for (int i = 0; i < newSLength; ++i)
+			{
+				for (int j = 0; j < newSWidth; ++j)
+				{
+					smallBucket[i][j] = smallMatrix[(newSLength - i) - 1][(newSWidth - j) - 1];
+				}
+			}
+			break;
+
+
+		case 3:
+			//Flip that sucker sideways the other way (new x = old y?; new y = reverse x?)
+			for (int i = 0; i < newSLength; ++i)
+			{
+				for (int j = 0; j < newSWidth; ++j)
+				{
+					smallBucket[i][j] = smallMatrix[j][(newSLength - i) - 1];
+				}
+			}
+			break;
+
+
+		default:
+			smallBucket = smallMatrix;
+			break;
+		}
+
+		//Write Small onto Large
+		for (int i = 0; i < smallBucket.size(); ++i)
+		{
+			for (int j = 0; j < smallBucket[0].size(); ++j)
+			{
+				largeBucket[i + inY][j + inX] = smallBucket[i][j];
+			}
+		}
+
+		return largeBucket;
 	};
 
-	float matrixWriteFloat(float largeMatrix, float smallMatrix, int inX, int inY, int inTheta, int largeWidth, int largeLength, int smallWidth, int smallLength)
+	std::vector<std::vector<float>> matrixWriteFloat(std::vector<std::vector<float>> largeMatrix, std::vector<std::vector<float>> smallMatrix, int inX, int inY, int inTheta)
 	{
-		return 0;
+		//Correct inTheta
+		if (inTheta != 1 && inTheta != 2 && inTheta != 3)
+		{
+			inTheta = 0;
+		}
+
+		//Check Dimensions
+		if (smallMatrix.size() > largeMatrix.size() || smallMatrix.size() > largeMatrix[0].size() || smallMatrix[0].size() > largeMatrix.size() || smallMatrix[0].size() > largeMatrix[0].size())
+		{
+			//I do not know how to throw errors in C++ :(
+		}
+
+		//Write Big Bucket
+		std::vector<std::vector<float>> largeBucket = largeMatrix;
+
+		//Rotated Small Matrix Dimensions
+		int newSWidth;
+		int newSLength;
+		switch (inTheta)
+		{
+		case 1:
+			newSWidth = smallMatrix.size();
+			newSLength = smallMatrix[0].size();
+			break;
+
+
+		case 2:
+			newSWidth = smallMatrix[0].size();
+			newSLength = smallMatrix.size();
+			break;
+
+
+		case 3:
+			newSWidth = smallMatrix.size();
+			newSLength = smallMatrix[0].size();
+			break;
+
+
+		default:
+			newSWidth = smallMatrix[0].size();
+			newSLength = smallMatrix.size();
+			break;
+		}
+
+		//Rotated Matrix Bucket
+		std::vector<std::vector<float>> smallBucket = {};
+		for (int i = 0; i < newSLength; ++i)
+		{
+			smallBucket.push_back({});
+			for (int j = 0; j < newSWidth; ++j)
+			{
+				smallBucket[i].push_back(0);
+			}
+		}
+
+		//Boundaries for position
+		if (inX < 0)
+		{
+			inX = 0;
+		}
+		if (inX >= largeMatrix[0].size())
+		{
+			inX = (largeMatrix[0].size() - smallBucket[0].size());
+		}
+		if (inY < 0)
+		{
+			inY = 0;
+		}
+		if (inY >= largeMatrix.size())
+		{
+			inY = (largeMatrix.size() - smallBucket.size());
+		}
+
+		//Write to Rotated Bucket
+		switch (inTheta)
+		{
+		case 1:
+			//Flip that sucker sideways (new Y = old x; new x = reverse Y)
+			for (int i = 0; i < newSLength; ++i)
+			{
+				for (int j = 0; j < newSWidth; ++j)
+				{
+					smallBucket[i][j] = smallMatrix[(newSWidth - j) - 1][i];
+				}
+			}
+			break;
+
+
+		case 2:
+			//Flip that sucker upside Down
+			for (int i = 0; i < newSLength; ++i)
+			{
+				for (int j = 0; j < newSWidth; ++j)
+				{
+					smallBucket[i][j] = smallMatrix[(newSLength - i) - 1][(newSWidth - j) - 1];
+				}
+			}
+			break;
+
+
+		case 3:
+			//Flip that sucker sideways the other way (new x = old y?; new y = reverse x?)
+			for (int i = 0; i < newSLength; ++i)
+			{
+				for (int j = 0; j < newSWidth; ++j)
+				{
+					smallBucket[i][j] = smallMatrix[j][(newSLength - i) - 1];
+				}
+			}
+			break;
+
+
+		default:
+			smallBucket = smallMatrix;
+			break;
+		}
+
+		//Write Small onto Large
+		for (int i = 0; i < smallBucket.size(); ++i)
+		{
+			for (int j = 0; j < smallBucket[0].size(); ++j)
+			{
+				largeBucket[i + inY][j + inX] = smallBucket[i][j];
+			}
+		}
+
+		return largeBucket;
 	};
 
-	double matrixWriteDouble(double largeMatrix, double smallMatrix, int inX, int inY, int inTheta, int largeWidth, int largeLength, int smallWidth, int smallLength)
+	std::vector<std::vector<double>> matrixWriteDouble(std::vector<std::vector<double>> largeMatrix, std::vector<std::vector<double>> smallMatrix, int inX, int inY, int inTheta)
 	{
-		return 0;
+		//Correct inTheta
+		if (inTheta != 1 && inTheta != 2 && inTheta != 3)
+		{
+			inTheta = 0;
+		}
+
+		//Check Dimensions
+		if (smallMatrix.size() > largeMatrix.size() || smallMatrix.size() > largeMatrix[0].size() || smallMatrix[0].size() > largeMatrix.size() || smallMatrix[0].size() > largeMatrix[0].size())
+		{
+			//I do not know how to throw errors in C++ :(
+		}
+
+		//Write Big Bucket
+		std::vector<std::vector<double>> largeBucket = largeMatrix;
+
+		//Rotated Small Matrix Dimensions
+		int newSWidth;
+		int newSLength;
+		switch (inTheta)
+		{
+		case 1:
+			newSWidth = smallMatrix.size();
+			newSLength = smallMatrix[0].size();
+			break;
+
+
+		case 2:
+			newSWidth = smallMatrix[0].size();
+			newSLength = smallMatrix.size();
+			break;
+
+
+		case 3:
+			newSWidth = smallMatrix.size();
+			newSLength = smallMatrix[0].size();
+			break;
+
+
+		default:
+			newSWidth = smallMatrix[0].size();
+			newSLength = smallMatrix.size();
+			break;
+		}
+
+		//Rotated Matrix Bucket
+		std::vector<std::vector<double>> smallBucket = {};
+		for (int i = 0; i < newSLength; ++i)
+		{
+			smallBucket.push_back({});
+			for (int j = 0; j < newSWidth; ++j)
+			{
+				smallBucket[i].push_back(0);
+			}
+		}
+
+		//Boundaries for position
+		if (inX < 0)
+		{
+			inX = 0;
+		}
+		if (inX >= largeMatrix[0].size())
+		{
+			inX = (largeMatrix[0].size() - smallBucket[0].size());
+		}
+		if (inY < 0)
+		{
+			inY = 0;
+		}
+		if (inY >= largeMatrix.size())
+		{
+			inY = (largeMatrix.size() - smallBucket.size());
+		}
+
+		//Write to Rotated Bucket
+		switch (inTheta)
+		{
+		case 1:
+			//Flip that sucker sideways (new Y = old x; new x = reverse Y)
+			for (int i = 0; i < newSLength; ++i)
+			{
+				for (int j = 0; j < newSWidth; ++j)
+				{
+					smallBucket[i][j] = smallMatrix[(newSWidth - j) - 1][i];
+				}
+			}
+			break;
+
+
+		case 2:
+			//Flip that sucker upside Down
+			for (int i = 0; i < newSLength; ++i)
+			{
+				for (int j = 0; j < newSWidth; ++j)
+				{
+					smallBucket[i][j] = smallMatrix[(newSLength - i) - 1][(newSWidth - j) - 1];
+				}
+			}
+			break;
+
+
+		case 3:
+			//Flip that sucker sideways the other way (new x = old y?; new y = reverse x?)
+			for (int i = 0; i < newSLength; ++i)
+			{
+				for (int j = 0; j < newSWidth; ++j)
+				{
+					smallBucket[i][j] = smallMatrix[j][(newSLength - i) - 1];
+				}
+			}
+			break;
+
+
+		default:
+			smallBucket = smallMatrix;
+			break;
+		}
+
+		//Write Small onto Large
+		for (int i = 0; i < smallBucket.size(); ++i)
+		{
+			for (int j = 0; j < smallBucket[0].size(); ++j)
+			{
+				largeBucket[i + inY][j + inX] = smallBucket[i][j];
+			}
+		}
+
+		return largeBucket;
 	};
 
 }
