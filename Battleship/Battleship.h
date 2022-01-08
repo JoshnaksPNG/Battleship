@@ -6,6 +6,9 @@
 #include <vector>
 #include <memory>
 
+
+
+
 //Ship Class
 class Ship 
 {
@@ -13,6 +16,10 @@ class Ship
         int xPos;
         int yPos;
         int angle;
+
+        std::vector<std::vector<int>> shape = {};
+        int width = {};
+        int length = {};
 
         Ship(int x, int y, int theta)
         {
@@ -109,6 +116,8 @@ class Carrier : public Ship
         int length = 3;
 };
 
+typedef std::shared_ptr<Ship> ShipPtr;
+
 class Player
 {
     public:
@@ -120,7 +129,6 @@ class Player
         std::vector<std::vector<int>> hits = {};
 
         //Player Ships
-        typedef std::unique_ptr<Ship> ShipPtr;
         std::vector<ShipPtr> ships;
 
         //Boards
@@ -148,16 +156,89 @@ class Player
             {0,0,0,0,0,0,0,0}
         };
         std::string opponentBString;
+
+        //Space for Player Ships
+        std::shared_ptr <Battleship> batShip;
+        std::shared_ptr <Cruiser> cruiShip;
+        std::shared_ptr <Submarine> subShip;
+        std::shared_ptr <Destroyer> desShip;
+        std::shared_ptr <Carrier> carShip;
+
+        std::string updateBoardStrings()
+        {
+            //Update Player Board String
+            //Inital Top Row
+            std::string updatedPlayerString = "  A B C D E F G H\n";
+
+            //Update each line of the updated string
+            for (int i = 0; i < 8; ++i)
+            {
+                std::string newRow = std::to_string(i + 1) + " ";
+
+                //Update each character of updated line
+                for (int j = 0; j < 8; ++j)
+                {
+                    newRow += std::to_string(playerBoard[i][j]);
+
+                    if (j != 7)
+                    {
+                        newRow += " ";
+                    }
+                    else
+                    {
+                        newRow += "\n";
+                    }
+                }
+
+                updatedPlayerString += newRow;
+
+            }
+
+            this->playerBString = updatedPlayerString;
+
+            //Update Opponent Board String
+            std::string updatedOpponentString = "  A B C D E F G H\n";
+
+            //Update each line of the updated string
+            for (int i = 0; i < 8; ++i)
+            {
+                std::string newRow = std::to_string(i + 1) + " ";
+
+                //Update each character of updated line
+                for (int j = 0; j < 8; ++j)
+                {
+                    newRow += std::to_string(opponentBoard[i][j]);
+
+                    if (j != 7)
+                    {
+                        newRow += " ";
+                    }
+                    else
+                    {
+                        newRow += "\n";
+                    }
+                }
+
+                updatedOpponentString += newRow;
+
+            }
+
+            this->opponentBString = updatedOpponentString;
+
+            return "";
+        }
 };
+
+
 
 //Namespace for Game Variables and Methods
 namespace battleshipGame
 {
-    typedef std::unique_ptr<Player> PlayerPtr;
+    typedef std::shared_ptr<Player> PlayerPtr;
 
-    extern std::vector<int> players;
+    extern std::vector<PlayerPtr> players;
 
-    // ships.push_back(std::make_unique<Ship>(constructor_args...));
+    // ships.push_back(std::make_shared<Ship>(constructor_args...));
     /*
         for (auto& pShip : ships)
         {
