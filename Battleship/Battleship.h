@@ -17,15 +17,19 @@ class Ship
         int yPos;
         int angle;
 
-        std::vector<std::vector<int>> shape = {};
-        int width = {};
-        int length = {};
+        std::vector<std::vector<int>> shape;
+        int width;
+        int length;
 
-        Ship(int x, int y, int theta)
+        Ship(int x, int y, int theta, std::vector<std::vector<int>> shapeIn, int widthIn, int lengthIn)
         {
             xPos = x;
             yPos = y;
             angle = theta; 
+
+            shape = shapeIn;
+            width = widthIn;
+            length = lengthIn;
         }
 };
 
@@ -34,86 +38,89 @@ class Ship
 class Battleship : public Ship
 {
     public:
-        Battleship(int xPos, int yPos, int angle) : Ship(xPos, yPos, angle)
+        Battleship(int xPos, int yPos, int angle) 
+            : Ship(
+                    xPos, 
+                    yPos, 
+                    angle, 
+                    {
+                        {1,1,1,1}
+                    },
+                    1, 
+                    4)
         {
             
         }
-
-        std::vector<std::vector<int>> shape =
-        {
-            {1,1,1,1}
-        };
-        int width = 1;
-        int length = 4;
 };
 
 //Cruiser Subclass
 class Cruiser : public Ship
 {
     public:
-        Cruiser(int xPos, int yPos, int angle) : Ship(xPos, yPos, angle)
+        Cruiser(int xPos, int yPos, int angle) 
+            : Ship( xPos, 
+                    yPos, 
+                    angle, 
+                    {
+                        {1,1,1}
+                    },
+                    1, 
+                    3)
         {
 
         }
-
-        std::vector<std::vector<int>> shape = 
-        { 
-            {1,1,1} 
-        };
-        int width = 1;
-        int length = 3;
 };
 
 //Submarine Subclass
 class Submarine : public Ship
 {
     public:
-        Submarine(int xPos, int yPos, int angle) : Ship(xPos, yPos, angle)
+        Submarine(int xPos, int yPos, int angle) 
+            : Ship( xPos, 
+                    yPos, 
+                    angle, 
+                    {
+                        {1,1,1}
+                    }, 
+                    1, 
+                    3)
         {
 
         }
-
-        std::vector<std::vector<int>> shape = 
-        { 
-            {1,1,1} 
-        };
-        int width = 1;
-        int length = 3;
 };
 
 //Destroyer Subclass
 class Destroyer : public Ship
 {
     public:
-        Destroyer(int xPos, int yPos, int angle) : Ship(xPos, yPos, angle)
+        Destroyer(int xPos, int yPos, int angle) 
+            : Ship( xPos, 
+                    yPos, 
+                    angle, 
+                    {
+                        {1,1}
+                    } , 
+                    1, 
+                    2)
         {
 
         }
-
-        std::vector<std::vector<int>> shape = 
-        { 
-            {1,1} 
-        };
-        int width = 1;
-        int length = 2;
 };
 
 //Carrier Subclass
 class Carrier : public Ship
 {
     public:
-        Carrier(int xPos, int yPos, int angle) : Ship(xPos, yPos, angle)
+        Carrier(int xPos, int yPos, int angle)
+            : Ship(xPos,
+                   yPos,
+                   angle,
+                   { {1,1,1},
+                     {1,1,0} },
+                   2,
+                   3)
         {
-
         }
-
-        std::vector<std::vector<int>> shape = 
-        { 
-            {1,1,1}, 
-            {1,1,0} 
-        };
-        int width = 1;
-        int length = 3;
 };
 
 typedef std::shared_ptr<Ship> ShipPtr;
@@ -258,7 +265,7 @@ namespace battleshipGame
 
     int setupTurn();
 
-    int placeShip(std::string input, int angle, int player);
+    int placeShip(std::string input, int angle, PlayerPtr player);
 
     std::string updateBoardString();
 }

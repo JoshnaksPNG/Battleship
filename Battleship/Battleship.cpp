@@ -2,6 +2,7 @@
 #include "Battleship.h"
 #include "MatrixWrite.h"
 #include <vector>
+#include<iostream>
 
 //Namespace for Game Variables and Methods
 namespace battleshipGame
@@ -136,14 +137,13 @@ namespace battleshipGame
             }
         }
 
-
-        //Place Ship and Add to Player's Ship List
+        //Get a pointer for a new ship
         ShipPtr currentShip = {};
         switch (turn)
         {
             case -5:
                 player->carShip = std::make_shared<Carrier>(x, y, angle);
-                currentShip = player->batShip;
+                currentShip = player->carShip;
                 break;
 
             case -4:
@@ -153,26 +153,79 @@ namespace battleshipGame
 
             case -3:
                 player->cruiShip = std::make_shared<Cruiser>(x, y, angle);
-                currentShip = player->batShip;
+                currentShip = player->cruiShip;
                 break;
 
             case -2:
                 player->subShip = std::make_shared<Submarine>(x, y, angle);
-                currentShip = player->batShip;
+                currentShip = player->subShip;
                 break;
 
             case -1:
                 player->desShip = std::make_shared<Destroyer>(x, y, angle);
-                currentShip = player->batShip;
+                currentShip = player->desShip;
                 break;
 
             default:
+                return 3;
                 break;
         }
+        //std::cout << currentShip;
+        //Check if new ship overlaps with another
+        for (int i = 0; i < currentShip->shape.size(); ++i)
+        {
+            for (int j = 0; j < currentShip->shape[0].size(); ++j)
+            {
+                int checkX = x + j;
+                int checkY = y + i;
 
+                //Return Error if ship placement goes off the board
+                if ( checkY >= player->playerBoard.size() || checkX >= player->playerBoard[0].size() )
+                {
+                    return 1;
+                }
+                else
+                {
+                    //Return Error if ship placement overlaps with another ship
+                    if (player->playerBoard[checkY][checkX] != 0)
+                    {
+                        switch (turn)
+                        {
+                            case -5:
+                                player->carShip = 0;
+                                break;
+
+                            case -4:
+                                player->batShip = 0;
+                                break;
+
+                            case -3:
+                                player->cruiShip = 0;
+                                break;
+
+                            case -2:
+                                player->subShip = 0;
+                                break;
+
+                            case -1:
+                                player->desShip = 0;
+                                break;
+
+                            default:
+                                break;
+                        }
+
+                        return 2;
+                    }
+                }
+            }
+        }
+
+        //Place Ship and Add to Player's Ship List
         player->ships.push_back(currentShip);
 
         //Add ship to Player's Ship Board
+        std::cout << turn;
         player->playerBoard = matrixwrite::matrixWriteInt(player->playerBoard, currentShip->shape, x, y, angle);
         player->updateBoardStrings();
 

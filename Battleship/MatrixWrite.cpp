@@ -1,5 +1,6 @@
 #include "MatrixWrite.h"
 #include <vector>
+#include <iostream>
 
 namespace matrixwrite
 {
@@ -45,6 +46,7 @@ namespace matrixwrite
 
 
 			default:
+				std::cout << smallMatrix[0][0];
 				newSWidth = smallMatrix[0].size();
 				newSLength = smallMatrix.size();
 				break;
