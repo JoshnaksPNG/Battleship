@@ -160,6 +160,7 @@ class Player
             {0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0}
         };
+        std::string zoneBString;
 
         //0: not attempted, 1: miss, 2: hit
         std::vector<std::vector<int>> opponentBoard =
@@ -243,6 +244,36 @@ class Player
             }
 
             this->opponentBString = updatedOpponentString;
+
+            //Update Player Board String
+            //Inital Top Row
+            std::string updatedZoneString = "  A B C D E F G H\n";
+
+            //Update each line of the updated string
+            for (int i = 0; i < 8; ++i)
+            {
+                std::string newRow = std::to_string(i + 1) + " ";
+
+                //Update each character of updated line
+                for (int j = 0; j < 8; ++j)
+                {
+                    newRow += std::to_string(playerZoneBoard[i][j]);
+
+                    if (j != 7)
+                    {
+                        newRow += " ";
+                    }
+                    else
+                    {
+                        newRow += "\n";
+                    }
+                }
+
+                updatedZoneString += newRow;
+
+            }
+
+            this->zoneBString = updatedZoneString;
 
             return "";
         }
