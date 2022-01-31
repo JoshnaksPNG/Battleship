@@ -6,9 +6,6 @@
 #include <vector>
 #include <memory>
 
-
-
-
 //Ship Class
 class Ship 
 {
@@ -139,6 +136,7 @@ class Player
         std::vector<ShipPtr> ships;
 
         //Boards
+        //0: not attempted, 1: miss, 2: hit, 3: Ship Location
         std::vector<std::vector<int>> playerBoard =
         {
             {0,0,0,0,0,0,0,0},
@@ -151,6 +149,8 @@ class Player
             {0,0,0,0,0,0,0,0}
         };
         std::string playerBString;
+
+        //0: not attempted, 1: miss, 2: hit
         std::vector<std::vector<int>> opponentBoard =
         {
             {0,0,0,0,0,0,0,0},
@@ -171,6 +171,7 @@ class Player
         std::shared_ptr <Destroyer> desShip;
         std::shared_ptr <Carrier> carShip;
 
+        //Method to Update The Board Strings
         std::string updateBoardStrings()
         {
             //Update Player Board String
@@ -245,14 +246,6 @@ namespace battleshipGame
 
     extern std::vector<PlayerPtr> players;
 
-    // ships.push_back(std::make_shared<Ship>(constructor_args...));
-    /*
-        for (auto& pShip : ships)
-        {
-            pShip->Foo();
-            Bar(*pShip);
-        }
-    */
     extern bool gameOver;
 
     extern std::vector<std::vector<int>> board;
@@ -268,4 +261,6 @@ namespace battleshipGame
     int placeShip(std::string input, int angle, PlayerPtr player);
 
     std::string updateBoardString();
+
+    int makeShot(std::string coords, battleshipGame::PlayerPtr from, battleshipGame::PlayerPtr toward);
 }

@@ -170,7 +170,7 @@ namespace battleshipGame
                 return 3;
                 break;
         }
-        //std::cout << currentShip;
+        
         //Check if new ship overlaps with another
         for (int i = 0; i < currentShip->shape.size(); ++i)
         {
@@ -225,9 +225,47 @@ namespace battleshipGame
         player->ships.push_back(currentShip);
 
         //Add ship to Player's Ship Board
-        std::cout << turn;
         player->playerBoard = matrixwrite::matrixWriteInt(player->playerBoard, currentShip->shape, x, y, angle);
         player->updateBoardStrings();
+
+        return 0;
+    }
+
+    //Method to Shoot At Coordinate
+    int makeShot(std::string coords, battleshipGame::PlayerPtr from, battleshipGame::PlayerPtr toward)
+    {
+        //Coordinate Variables
+        int x = {};
+        int y = {};
+
+        //Get Coordinates from String
+        for (int i = 0; i < coords.length(); ++i)
+        {
+            int inCode = (int)coords[i];
+            if (inCode >= 49 && inCode <= 56)
+            {
+                if (!(x && x != 0))
+                {
+                    x = inCode - 49;
+                }
+            }
+            else if ((inCode >= 65 && inCode <= 72))
+            {
+                if (!(y && y != 0))
+                {
+                    y = inCode - 65;
+                }
+            }
+            else if ((inCode >= 97 && inCode <= 104))
+            {
+                if (!(y && y != 0))
+                {
+                    y = inCode - 97;
+                }
+            }
+        }
+
+        //
 
         return 0;
     }
