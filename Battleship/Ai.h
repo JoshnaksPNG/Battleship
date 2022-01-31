@@ -35,4 +35,7 @@ class COMPlayer : public Player
 
         //The Last Shot That the COM Made
         std::vector<int> lastShot = { -1, -1 };
+
+        COMPlayer() : Player(true)
+        {}
 };

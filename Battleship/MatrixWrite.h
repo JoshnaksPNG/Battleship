@@ -11,4 +11,6 @@ namespace matrixwrite
 	std::vector<std::vector<float>> matrixWriteFloat(std::vector<std::vector<float>> largeMatrix, std::vector<std::vector<float>> smallMatrix, int inX, int inY, int inTheta);
 	std::vector<std::vector<double>> matrixWriteDouble(std::vector<std::vector<double>> largeMatrix, std::vector<std::vector<double>> smallMatrix, int inX, int inY, int inTheta);
 
+	//Change all non-zero elements to 3
+	std::vector<std::vector<int>> intMatrixNormalize(std::vector<std::vector<int>> largeMatrix);
 }

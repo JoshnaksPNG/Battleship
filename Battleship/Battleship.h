@@ -18,6 +18,9 @@ class Ship
         int width;
         int length;
 
+        int hits = 0;
+        bool destr = false;
+
         Ship(int x, int y, int theta, std::vector<std::vector<int>> shapeIn, int widthIn, int lengthIn)
         {
             xPos = x;
@@ -41,13 +44,11 @@ class Battleship : public Ship
                     yPos, 
                     angle, 
                     {
-                        {1,1,1,1}
+                        {2,2,2,2}
                     },
                     1, 
                     4)
-        {
-            
-        }
+        {}
 };
 
 //Cruiser Subclass
@@ -59,13 +60,11 @@ class Cruiser : public Ship
                     yPos, 
                     angle, 
                     {
-                        {1,1,1}
+                        {3,3,3}
                     },
                     1, 
                     3)
-        {
-
-        }
+        {}
 };
 
 //Submarine Subclass
@@ -77,13 +76,11 @@ class Submarine : public Ship
                     yPos, 
                     angle, 
                     {
-                        {1,1,1}
+                        {4,4,4}
                     }, 
                     1, 
                     3)
-        {
-
-        }
+        {}
 };
 
 //Destroyer Subclass
@@ -95,13 +92,11 @@ class Destroyer : public Ship
                     yPos, 
                     angle, 
                     {
-                        {1,1}
+                        {5,5}
                     } , 
                     1, 
                     2)
-        {
-
-        }
+        {}
 };
 
 //Carrier Subclass
@@ -116,8 +111,7 @@ class Carrier : public Ship
                      {1,1,0} },
                    2,
                    3)
-        {
-        }
+        {}
 };
 
 typedef std::shared_ptr<Ship> ShipPtr;
@@ -125,6 +119,9 @@ typedef std::shared_ptr<Ship> ShipPtr;
 class Player
 {
     public:
+        //COM Bool
+        bool com;
+
         //Player Score
         int score = 0;
 
@@ -149,6 +146,20 @@ class Player
             {0,0,0,0,0,0,0,0}
         };
         std::string playerBString;
+
+        //Ship Zones
+        //1: Carrier, 2: Battleship, 3: Cuiser, 4: Submarine, 5: Destroyer
+        std::vector<std::vector<int>> playerZoneBoard =
+        {
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0}
+        };
 
         //0: not attempted, 1: miss, 2: hit
         std::vector<std::vector<int>> opponentBoard =
@@ -234,6 +245,12 @@ class Player
             this->opponentBString = updatedOpponentString;
 
             return "";
+        }
+
+        //Constructor
+        Player(bool comIn)
+        {
+            com = comIn;
         }
 };
 

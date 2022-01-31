@@ -661,4 +661,27 @@ namespace matrixwrite
 		return largeBucket;
 	};
 
+	//Change all non-zero elements to 3
+	std::vector<std::vector<int>> intMatrixNormalize(std::vector<std::vector<int>> largeMatrix)
+	{
+		std::vector<std::vector<int>> outMatrix = {};
+
+		for (int i = 0; i < largeMatrix.size(); ++i)
+		{
+			outMatrix.push_back({});
+			for (int j = 0; j < largeMatrix[i].size(); ++j)
+			{
+				if (largeMatrix[i][j] == 0)
+				{
+					outMatrix[i].push_back(0);
+				}
+				else
+				{
+					outMatrix[i].push_back(3);
+				}
+			}
+		}
+
+		return outMatrix;
+	}
 }

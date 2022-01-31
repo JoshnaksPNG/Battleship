@@ -11,7 +11,7 @@ using namespace std;
 int main()
 {
     //Define Players
-    battleshipGame::PlayerPtr play1 = std::make_shared<Player>();
+    battleshipGame::PlayerPtr play1 = std::make_shared<Player>(false);
     battleshipGame::PlayerPtr com1 = std::make_shared<COMPlayer>();
 
     //Randomize Player First Turn
@@ -21,12 +21,10 @@ int main()
     //Which Player Goes First
     int firstTurn = rand() % 2 + 1;
 
-    Battleship ship(3, 3, 1);
+    battleshipGame::placeShip("G2", 1, play1);
+    play1->updateBoardStrings();
 
-    battleshipGame::PlayerPtr pme = std::make_shared<Player>();
-
-    battleshipGame::placeShip("C1", 0, pme);
-    
-
+    cout << "\n";
+    cout << play1->playerBString;
     
 }

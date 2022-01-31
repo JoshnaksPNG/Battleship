@@ -116,23 +116,23 @@ namespace battleshipGame
             int inCode = (int)input[i];
             if(inCode >= 49 && inCode <= 56)
             {
-                if (!(x && x != 0))
+                if (!(y && y != 0))
                 {
-                    x = inCode - 49;
+                    y = inCode - 49;
                 }
             }
             else if ((inCode >= 65 && inCode <= 72))
             {
-                if (!(y && y != 0))
+                if (!(x && x != 0))
                 {
-                    y = inCode - 65;
+                    x = inCode - 65;
                 }
             }
             else if ((inCode >= 97 && inCode <= 104))
             {
-                if (!(y && y != 0))
+                if (!(x && x != 0))
                 {
-                    y = inCode - 97;
+                    x = inCode - 97;
                 }
             }
         }
@@ -176,8 +176,19 @@ namespace battleshipGame
         {
             for (int j = 0; j < currentShip->shape[0].size(); ++j)
             {
-                int checkX = x + j;
-                int checkY = y + i;
+                int checkX;
+                int checkY;
+                if (angle % 2 == 0)
+                {
+                    checkX = x + j;
+                    checkY = y + i;
+                }
+                else
+                {
+                    checkX = x + i;
+                    checkY = y + j;
+                }
+                
 
                 //Return Error if ship placement goes off the board
                 if ( checkY >= player->playerBoard.size() || checkX >= player->playerBoard[0].size() )
@@ -226,6 +237,8 @@ namespace battleshipGame
 
         //Add ship to Player's Ship Board
         player->playerBoard = matrixwrite::matrixWriteInt(player->playerBoard, currentShip->shape, x, y, angle);
+        player->playerZoneBoard = matrixwrite::matrixWriteInt(player->playerZoneBoard, currentShip->shape, x, y, angle);
+        player->playerBoard = matrixwrite::intMatrixNormalize(player->playerBoard);
         player->updateBoardStrings();
 
         return 0;
@@ -244,28 +257,162 @@ namespace battleshipGame
             int inCode = (int)coords[i];
             if (inCode >= 49 && inCode <= 56)
             {
-                if (!(x && x != 0))
+                if (!(y && y != 0))
                 {
-                    x = inCode - 49;
+                    y = inCode - 49;
                 }
             }
             else if ((inCode >= 65 && inCode <= 72))
             {
-                if (!(y && y != 0))
+                if (!(x && x != 0))
                 {
-                    y = inCode - 65;
+                    x = inCode - 65;
                 }
             }
             else if ((inCode >= 97 && inCode <= 104))
             {
-                if (!(y && y != 0))
+                if (!(x && x != 0))
                 {
-                    y = inCode - 97;
+                    x = inCode - 97;
                 }
             }
         }
 
-        //
+        //Check the State of the Targeted Square
+        bool hitShip = false;
+        switch (toward->playerBoard[x][y])
+        {
+            case 0:
+                //Assign a miss value to board in question
+                toward->playerBoard[x][y] = 1;
+                from->opponentBoard[x][y] = 1;
+                break;
+
+            case 1:
+                //Return -1 to Indicate that square is already a miss
+                std::cout << "You already shot at that square. It was a miss.";
+                return -1;
+                break;
+
+            case 2:
+                //Return -2 to Indicate that square is already a hit
+                std::cout << "You already shot at that square. It was a hit.";
+                return -2;
+                break;
+
+            case 3: 
+                //Assign a hit value to board in question
+                toward->playerBoard[x][y] = 2;
+                from->opponentBoard[x][y] = 2;
+                hitShip = true;
+                break;
+        }
+
+        //If a Ship Was Hit, Check which Ship Was Hit
+        if (hitShip)
+        {
+            switch (toward->playerZoneBoard[x][y])
+            {
+                case 1:
+                    ++toward->carShip->hits;
+
+                    //Destroy Ship If it has Sustained 5 or More Hits
+                    if (toward->carShip->hits >= 5)
+                    {
+                        toward->carShip->destr = true;
+
+                        //Sinking Notification
+                        if (toward->com)
+                        {
+                            std::cout << "You sunk your opponent's carrier!";
+                        }
+                        else
+                        {
+                            std::cout << "Your opponent sunk your carrier!";
+                        }
+                    }
+                    break;
+                case 2:
+                    ++toward->batShip->hits;
+
+                    //Destroy Ship If it has Sustained 4 or More Hits
+                    if (toward->batShip->hits >= 4)
+                    {
+                        toward->batShip->destr = true;
+
+                        //Sinking Notification
+                        if (toward->com)
+                        {
+                            std::cout << "You sunk your opponent's battleship!";
+                        }
+                        else
+                        {
+                            std::cout << "Your opponent sunk your battleship!";
+                        }
+                    }
+                    break;
+                case 3:
+                    ++toward->cruiShip->hits;
+
+                    //Destroy Ship If it has Sustained 3 or More Hits
+                    if (toward->cruiShip->hits >= 3)
+                    {
+                        toward->cruiShip->destr = true;
+
+                        //Sinking Notification
+                        if (toward->com)
+                        {
+                            std::cout << "You sunk your opponent's cruiser!";
+                        }
+                        else
+                        {
+                            std::cout << "Your opponent sunk your cruiser!";
+                        }
+                    }
+                    break;
+                case 4:
+                    ++toward->subShip->hits;
+
+                    //Destroy Ship If it has Sustained 3 or More Hits
+                    if (toward->subShip->hits >= 3)
+                    {
+                        toward->subShip->destr = true;
+
+                        //Sinking Notification
+                        if (toward->com)
+                        {
+                            std::cout << "You sunk your opponent's submarine!";
+                        }
+                        else
+                        {
+                            std::cout << "Your opponent sunk your submarine!";
+                        }
+                    }
+                    break;
+                case 5:
+                    ++toward->desShip->hits;
+
+                    //Destroy Ship If it has Sustained 2 or More Hits
+                    if (toward->desShip->hits >= 2)
+                    {
+                        toward->desShip->destr = true;
+
+                        //Sinking Notification
+                        if (toward->com)
+                        {
+                            std::cout << "You sunk your opponent's destroyer!";
+                        }
+                        else
+                        {
+                            std::cout << "Your opponent sunk your destroyer!";
+                        }
+                    }
+                    break;
+
+            }
+        }
+
+
 
         return 0;
     }
