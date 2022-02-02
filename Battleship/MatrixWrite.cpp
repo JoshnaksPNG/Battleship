@@ -46,7 +46,6 @@ namespace matrixwrite
 
 
 			default:
-				std::cout << smallMatrix[0][0];
 				newSWidth = smallMatrix[0].size();
 				newSLength = smallMatrix.size();
 				break;

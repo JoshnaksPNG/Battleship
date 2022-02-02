@@ -165,10 +165,6 @@ namespace battleshipGame
                 player->desShip = std::make_shared<Destroyer>(x, y, angle);
                 currentShip = player->desShip;
                 break;
-
-            default:
-                return 3;
-                break;
         }
         
         //Check if new ship overlaps with another
@@ -415,5 +411,48 @@ namespace battleshipGame
 
 
         return 0;
+    }
+
+    int stringToInt(std::string input)
+    {
+        for (int i = 0; i < input.size(); ++i)
+        {
+            switch (input[i])
+            {
+            case '0':
+                return 0;
+                break;
+            case '1':
+                return 1;
+                break;
+            case '2':
+                return 2;
+                break;
+            case '3':
+                return 3;
+                break;
+            }
+        }
+
+        return 0;
+    }
+
+    void checkPlayerShips(PlayerPtr target)
+    {
+        //bool allDestr = ;
+
+        if (target->batShip->destr && target->carShip->destr && target->cruiShip->destr && target->desShip->destr && target->subShip->destr)
+        {
+            battleshipGame::gameOver = true;
+            
+            if (target->com)
+            {
+                std::cout << "You won the game!";
+            }
+            else
+            {
+                std::cout << "You lost the game.";
+            }
+        }
     }
 }

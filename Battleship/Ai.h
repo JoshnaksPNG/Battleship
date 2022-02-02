@@ -4,7 +4,9 @@
 
 namespace ai
 {
-	
+    void setup(battleshipGame::PlayerPtr comPlyr);
+
+    void move(battleshipGame::PlayerPtr comPlyr);
 
 
 }

@@ -311,4 +311,8 @@ namespace battleshipGame
     std::string updateBoardString();
 
     int makeShot(std::string coords, battleshipGame::PlayerPtr from, battleshipGame::PlayerPtr toward);
+
+    int stringToInt(std::string input);
+
+    void checkPlayerShips(PlayerPtr target);
 }
