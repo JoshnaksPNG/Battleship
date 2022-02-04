@@ -1,6 +1,7 @@
 #include "MatrixWrite.h"
 #include <vector>
 #include <iostream>
+#include <stdint.h>
 
 namespace matrixwrite
 {

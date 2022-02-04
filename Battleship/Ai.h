@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Battleship.h"
+#include <stdint.h>
 
 namespace ai
 {
@@ -20,7 +21,21 @@ class COMPlayer : public Player
 
         //Shot Attempts
         //0: not attempted, 1: miss, 2: hit
-		std::vector<std::vector<char>> attempts = 
+		std::vector<std::vector<int>> attempts = 
+        {
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0}
+        };
+
+        //Placed ships
+        //0: Empty Square, 1: Ship Placed, 2: Ship Adjacent
+        std::vector<std::vector<int>> placement =
         {
             {0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0},

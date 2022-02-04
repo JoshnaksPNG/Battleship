@@ -6,6 +6,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <stdint.h>
 
 using namespace std;
 
@@ -23,7 +24,11 @@ int main()
     //Which Player Goes First
     int firstTurn = rand() % 2 + 1;
     int turns = 0;
+    
+    
 
+    ai::setup(com1);
+    play1->updateBoardStrings();
     std::cout << play1->zoneBString;
 
     //Game Loop
@@ -68,7 +73,7 @@ int main()
                 std::string angleInput;
                 cin >> angleInput;
 
-                int placedOut = battleshipGame::placeShip(coordInput, battleshipGame::stringToInt(angleInput), play1);
+                int placedOut = battleshipGame::placeShip(coordInput, battleshipGame::stringToInt(angleInput), play1, battleshipGame::turn);
 
                 if (placedOut == 0)
                 {
@@ -80,6 +85,7 @@ int main()
             play1->updateBoardStrings();
             std::cout << play1->zoneBString;
         }
+
         //Post-setup Game
         else
         {

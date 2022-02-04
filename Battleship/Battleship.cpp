@@ -106,7 +106,7 @@ namespace battleshipGame
         return 0;
     }
 
-    int placeShip(std::string input, int angle, PlayerPtr player)
+    int placeShip(std::string input, int angle, PlayerPtr player, int turnIn)
     {
         //Get int Coordinates from "A1" "2C" "B 5" sort of input
         int x = {};
@@ -139,7 +139,7 @@ namespace battleshipGame
 
         //Get a pointer for a new ship
         ShipPtr currentShip = {};
-        switch (turn)
+        switch (turnIn)
         {
             case -5:
                 player->carShip = std::make_shared<Carrier>(x, y, angle);
@@ -196,7 +196,7 @@ namespace battleshipGame
                     //Return Error if ship placement overlaps with another ship
                     if (player->playerBoard[checkY][checkX] != 0)
                     {
-                        switch (turn)
+                        switch (turnIn)
                         {
                             case -5:
                                 player->carShip = 0;
@@ -439,8 +439,6 @@ namespace battleshipGame
 
     void checkPlayerShips(PlayerPtr target)
     {
-        //bool allDestr = ;
-
         if (target->batShip->destr && target->carShip->destr && target->cruiShip->destr && target->desShip->destr && target->subShip->destr)
         {
             battleshipGame::gameOver = true;
@@ -454,5 +452,12 @@ namespace battleshipGame
                 std::cout << "You lost the game.";
             }
         }
+    }
+
+    char intToAlpha(int input)
+    {
+        int charCode = 65 + input;
+
+        return (char)charCode;
     }
 }

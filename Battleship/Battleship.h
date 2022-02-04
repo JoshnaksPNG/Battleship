@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <stdint.h>
 
 //Ship Class
 class Ship 
@@ -114,7 +115,10 @@ class Carrier : public Ship
         {}
 };
 
-typedef std::shared_ptr<Ship> ShipPtr;
+namespace battleshipGame
+{
+    typedef std::shared_ptr<Ship> ShipPtr;
+}
 
 class Player
 {
@@ -130,7 +134,7 @@ class Player
         std::vector<std::vector<int>> hits = {};
 
         //Player Ships
-        std::vector<ShipPtr> ships;
+        std::vector<battleshipGame::ShipPtr> ships;
 
         //Boards
         //0: not attempted, 1: miss, 2: hit, 3: Ship Location
@@ -283,6 +287,9 @@ class Player
         {
             com = comIn;
         }
+
+        //I don't know what this does, but it makes the error go bye-bye
+        virtual ~Player() = default;
 };
 
 
@@ -306,7 +313,7 @@ namespace battleshipGame
 
     int setupTurn();
 
-    int placeShip(std::string input, int angle, PlayerPtr player);
+    int placeShip(std::string input, int angle, PlayerPtr player, int turnIn);
 
     std::string updateBoardString();
 
@@ -315,4 +322,6 @@ namespace battleshipGame
     int stringToInt(std::string input);
 
     void checkPlayerShips(PlayerPtr target);
+
+    char intToAlpha(int input);
 }
