@@ -25,15 +25,12 @@ int main()
     //Which Player Goes First
     int firstTurn = rand() % 2 + 1;
     int turns = 0;
-    
-    
 
     ai::setup(com1);
     play1->updateBoardStrings();
     //std::cout << play1->zoneBString;
 
     com1->updateBoardStrings();
-    std::cout <<"\n" + com1->zoneBString;
 
     //Game Loop
     while (!battleshipGame::gameOver)

@@ -276,12 +276,12 @@ namespace battleshipGame
 
         //Check the State of the Targeted Square
         bool hitShip = false;
-        switch (toward->playerBoard[x][y])
+        switch (toward->playerBoard[y][x]) //X and Y were switched in every reference this point and beyond
         {
             case 0:
                 //Assign a miss value to board in question
-                toward->playerBoard[x][y] = 1;
-                from->opponentBoard[x][y] = 1;
+                toward->playerBoard[y][x] = 1;
+                from->opponentBoard[y][x] = 1;
                 break;
 
             case 1:
@@ -298,8 +298,8 @@ namespace battleshipGame
 
             case 3: 
                 //Assign a hit value to board in question
-                toward->playerBoard[x][y] = 2;
-                from->opponentBoard[x][y] = 2;
+                toward->playerBoard[y][x] = 2;
+                from->opponentBoard[y][x] = 2;
                 hitShip = true;
                 break;
         }
@@ -307,7 +307,7 @@ namespace battleshipGame
         //If a Ship Was Hit, Check which Ship Was Hit
         if (hitShip)
         {
-            switch (toward->playerZoneBoard[x][y])
+            switch (toward->playerZoneBoard[y][x])
             {
                 case 1:
                     ++toward->carShip->hits;
@@ -326,7 +326,19 @@ namespace battleshipGame
                         {
                             std::cout << "Your opponent sunk your carrier!";
                         }
+                    } else
+                    {
+                        //Sinking Notification
+                        if (toward->com)
+                        {
+                            std::cout << "You hit your opponent's carrier!";
+                        }
+                        else
+                        {
+                            std::cout << "Your opponent hit your carrier!";
+                        }
                     }
+
                     break;
                 case 2:
                     ++toward->batShip->hits;
@@ -344,6 +356,17 @@ namespace battleshipGame
                         else
                         {
                             std::cout << "Your opponent sunk your battleship!";
+                        }
+                    } else
+                    {
+                        //Sinking Notification
+                        if (toward->com)
+                        {
+                            std::cout << "You hit your opponent's battleship!";
+                        }
+                        else
+                        {
+                            std::cout << "Your opponent hit your battleship!";
                         }
                     }
                     break;
@@ -364,6 +387,17 @@ namespace battleshipGame
                         {
                             std::cout << "Your opponent sunk your cruiser!";
                         }
+                    } else
+                    {
+                        //Sinking Notification
+                        if (toward->com)
+                        {
+                            std::cout << "You hit your opponent's cruiser!";
+                        }
+                        else
+                        {
+                            std::cout << "Your opponent hit your cruiser!";
+                        }
                     }
                     break;
                 case 4:
@@ -383,6 +417,17 @@ namespace battleshipGame
                         {
                             std::cout << "Your opponent sunk your submarine!";
                         }
+                    }else
+                    {
+                        //Sinking Notification
+                        if (toward->com)
+                        {
+                            std::cout << "You hit your opponent's submarine!";
+                        }
+                        else
+                        {
+                            std::cout << "Your opponent hit your submarine!";
+                        }
                     }
                     break;
                 case 5:
@@ -401,6 +446,17 @@ namespace battleshipGame
                         else
                         {
                             std::cout << "Your opponent sunk your destroyer!";
+                        }
+                    }else
+                    {
+                        //Sinking Notification
+                        if (toward->com)
+                        {
+                            std::cout << "You hit your opponent's destroyer!";
+                        }
+                        else
+                        {
+                            std::cout << "Your opponent hit your destroyer!";
                         }
                     }
                     break;
