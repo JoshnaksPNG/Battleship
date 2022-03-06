@@ -16,6 +16,7 @@ int main()
     //Define Players
     battleshipGame::PlayerPtr play1 = std::make_shared<Player>(false);
     battleshipGame::PlayerPtr com1 = std::make_shared<COMPlayer>();
+    auto com1a = dynamic_cast<COMPlayer*>(com1.get());
 
     //Randomize Player First Turn
     //Random Seed
@@ -29,7 +30,10 @@ int main()
 
     ai::setup(com1);
     play1->updateBoardStrings();
-    std::cout << play1->zoneBString;
+    //std::cout << play1->zoneBString;
+
+    com1->updateBoardStrings();
+    std::cout <<"\n" + com1->zoneBString;
 
     //Game Loop
     while (!battleshipGame::gameOver)
@@ -121,5 +125,4 @@ int main()
 
     /*cout << "\n";
     cout << play1->zoneBString;*/
-    
 }

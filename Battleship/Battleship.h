@@ -323,5 +323,5 @@ namespace battleshipGame
 
     void checkPlayerShips(PlayerPtr target);
 
-    char intToAlpha(int input);
+    std::string intToAlpha(int input);
 }

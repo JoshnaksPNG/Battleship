@@ -454,10 +454,14 @@ namespace battleshipGame
         }
     }
 
-    char intToAlpha(int input)
+    std::string intToAlpha(int input)
     {
         int charCode = 65 + input;
 
-        return (char)charCode;
+        std::string ret = "";
+
+        ret += (char)charCode;
+
+        return ret;
     }
 }
