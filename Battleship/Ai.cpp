@@ -368,6 +368,12 @@ namespace ai
 					if (comPlyra->hitList[0].adjCells.size() == 0)
 					{
 						comPlyra->hitList.erase(comPlyra->hitList.begin());
+
+						if (comPlyra->hitList.size() == 0)
+						{
+							comPlyra->randomFire = true;
+							break;
+						}
 					}
 				}
 			}
@@ -375,6 +381,10 @@ namespace ai
 
 		//Put together coord string
 		std::string coords = "" + battleshipGame::intToAlpha(x) + std::to_string(y + 1);
+
+		std::cout << "COM shot at ";
+		std::cout << coords;
+		std::cout << "\n\n";
 
 		int shotAttmpt = battleshipGame::makeShot(coords, comPlyr, plyr);
 

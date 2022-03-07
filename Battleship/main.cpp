@@ -85,6 +85,7 @@ int main()
             ++battleshipGame::turn;
             play1->updateBoardStrings();
             std::cout << play1->zoneBString;
+            std::cout << "-----------------\n";
         }
 
         //Post-setup Game
@@ -99,6 +100,8 @@ int main()
                 std::string coordInput;
                 std::cin >> coordInput;
 
+                std::cout << "\n\n\n\n\n\n\n\n\n";
+
                 battleshipGame::makeShot(coordInput, play1, com1);
 
                 battleshipGame::checkPlayerShips(com1);
@@ -112,6 +115,10 @@ int main()
 
                 battleshipGame::checkPlayerShips(play1);
                 ++turns;
+
+                std::cout << play1->playerBString;
+                std::cout << "\n";
+                std::cout << play1->opponentBString;
             }
         }
 

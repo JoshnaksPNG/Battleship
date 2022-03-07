@@ -202,7 +202,24 @@ class Player
                 //Update each character of updated line
                 for (int j = 0; j < 8; ++j)
                 {
-                    newRow += std::to_string(playerBoard[i][j]);
+                    //newRow += std::to_string(playerBoard[i][j]);
+
+                    if (playerBoard[i][j] == 0)
+                    {
+                        newRow += " ";
+                    }
+                    else if (playerBoard[i][j] == 1)
+                    {
+                        newRow += ".";
+                    }
+                    else if (playerBoard[i][j] == 2)
+                    {
+                        newRow += "X";
+                    }
+                    else if (playerBoard[i][j] == 3)
+                    {
+                        newRow += "#";
+                    }
 
                     if (j != 7)
                     {
@@ -231,7 +248,20 @@ class Player
                 //Update each character of updated line
                 for (int j = 0; j < 8; ++j)
                 {
-                    newRow += std::to_string(opponentBoard[i][j]);
+                    //newRow += std::to_string(opponentBoard[i][j]);
+
+                    if (opponentBoard[i][j] == 0)
+                    {
+                        newRow += " ";
+                    }
+                    else if (opponentBoard[i][j] == 1)
+                    {
+                        newRow += ".";
+                    }
+                    else if (opponentBoard[i][j] == 2)
+                    {
+                        newRow += "X";
+                    }
 
                     if (j != 7)
                     {
