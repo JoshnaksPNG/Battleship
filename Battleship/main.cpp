@@ -108,7 +108,7 @@ int main()
             //COM Player Turn
             else
             {
-
+                ai::move(com1, play1);
 
                 battleshipGame::checkPlayerShips(play1);
                 ++turns;
@@ -117,9 +117,4 @@ int main()
 
         
     }
-
-    play1->updateBoardStrings();
-
-    /*cout << "\n";
-    cout << play1->zoneBString;*/
 }

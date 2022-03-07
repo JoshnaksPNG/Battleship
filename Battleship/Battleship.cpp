@@ -285,15 +285,11 @@ namespace battleshipGame
                 break;
 
             case 1:
-                //Return -1 to Indicate that square is already a miss
                 std::cout << "You already shot at that square. It was a miss.";
-                return -1;
                 break;
 
             case 2:
-                //Return -2 to Indicate that square is already a hit
                 std::cout << "You already shot at that square. It was a hit.";
-                return -2;
                 break;
 
             case 3: 
@@ -326,6 +322,9 @@ namespace battleshipGame
                         {
                             std::cout << "Your opponent sunk your carrier!";
                         }
+
+                        return 2;
+
                     } else
                     {
                         //Sinking Notification
@@ -357,6 +356,9 @@ namespace battleshipGame
                         {
                             std::cout << "Your opponent sunk your battleship!";
                         }
+
+                        return 2;
+
                     } else
                     {
                         //Sinking Notification
@@ -387,6 +389,9 @@ namespace battleshipGame
                         {
                             std::cout << "Your opponent sunk your cruiser!";
                         }
+
+                        return 2;
+
                     } else
                     {
                         //Sinking Notification
@@ -417,6 +422,9 @@ namespace battleshipGame
                         {
                             std::cout << "Your opponent sunk your submarine!";
                         }
+
+                        return 2;
+
                     }else
                     {
                         //Sinking Notification
@@ -447,6 +455,9 @@ namespace battleshipGame
                         {
                             std::cout << "Your opponent sunk your destroyer!";
                         }
+
+                        return 2;
+
                     }else
                     {
                         //Sinking Notification
@@ -462,6 +473,8 @@ namespace battleshipGame
                     break;
 
             }
+
+            return 1;
         }
 
 

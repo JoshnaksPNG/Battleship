@@ -298,8 +298,8 @@ namespace ai
 					}
 
 					//Random Coordinates
-					int x = rand() % (9 - checkShape[0].size());	int xRange = 9 - checkShape[0].size();
-					int y = rand() % (9 - checkShape.size());		int yRange = 9 - checkShape.size();
+					int x = rand() % (9 - checkShape[0].size());
+					int y = rand() % (9 - checkShape.size());
 
 					std::string coords = "  " + battleshipGame::intToAlpha(x) + std::to_string(y);
 					int placementCheck = battleshipGame::placeShip(coords, r, comPlyr, remainShips[0]);
@@ -319,9 +319,80 @@ namespace ai
 		}
 	}
 
-	void move(battleshipGame::PlayerPtr comPlyr)
+	void move(battleshipGame::PlayerPtr comPlyr, battleshipGame::PlayerPtr plyr)
 	{
+		auto comPlyra = dynamic_cast<COMPlayer*>(comPlyr.get());
 
+		int x;
+		int y;
+
+		//Random Starting Shot
+		if (comPlyra->randomFire)
+		{
+			bool clearSpot = false;
+			while (!clearSpot)
+			{
+				x = rand() % (8);
+				y = rand() % (8);
+
+				if ((x + y) % 2 == 0)
+				{
+					if (comPlyra->attempts[y][x] == 0)
+					{
+						clearSpot = true;
+						break;
+					}
+				}
+			}
+			
+		}
+		//Algorithmic Shooting
+		else
+		{
+			//shoot at each adjacent cell
+			bool clearSpot = false;
+			while (!clearSpot)
+			{
+				x = comPlyra->hitList[0].adjCells[0].x;
+				y = comPlyra->hitList[0].adjCells[0].y;
+				comPlyra->hitList[0].adjCells.erase(comPlyra->hitList[0].adjCells.begin());
+
+				if (comPlyra->attempts[y][x] == 0)
+				{
+					clearSpot = true;
+				}
+
+				//erase hitcell if all surrounding cells have been shot at
+				if (comPlyra->hitList.size() != 0)
+				{
+					if (comPlyra->hitList[0].adjCells.size() == 0)
+					{
+						comPlyra->hitList.erase(comPlyra->hitList.begin());
+					}
+				}
+			}
+		}
+
+		//Put together coord string
+		std::string coords = "" + battleshipGame::intToAlpha(x) + std::to_string(y + 1);
+
+		int shotAttmpt = battleshipGame::makeShot(coords, comPlyr, plyr);
+
+		//Update attempts
+		comPlyra->attempts[y][x] = shotAttmpt;
+
+		//Add Another Cell if a hit was returned
+		if (shotAttmpt == 2 || shotAttmpt == 1)
+		{
+			comPlyra->hitList.push_back(HitCell(x, y));
+			comPlyra->randomFire = false;
+		}
+
+		//Turn on Random Fire if No More Connected Cells
+		if (comPlyra->hitList.size() == 0)
+		{
+			comPlyra->randomFire = true;
+		}
 	}
 
 }
