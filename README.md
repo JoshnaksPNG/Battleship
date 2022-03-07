@@ -1,13 +1,12 @@
 # Battleship
 A C++ battleship game
-=====================
 
 Setup
 -----
 
 1. Download Project in preferred manner
 2. Compile Project
-3. "You're done, son!" - Abraham Lincoln
+3. "You're done, son!" -Abraham Lincoln
 
 
 Playing
