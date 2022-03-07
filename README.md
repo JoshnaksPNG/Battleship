@@ -12,7 +12,7 @@ Setup
 
 Playing
 -------
-"It's Battleship, how don't you know how to play?" -Joshnaks
+> "It's Battleship, how don't you know how to play?" -Joshnaks
 
 1. Run Program
 2. Place Your Ships
