@@ -338,10 +338,6 @@ namespace battleshipGame
     extern std::string boardString;
 
     extern int turn;
-    
-    int nextTurn();
-
-    int setupTurn();
 
     int placeShip(std::string input, int angle, PlayerPtr player, int turnIn);
 
