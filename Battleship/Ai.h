@@ -107,6 +107,6 @@ class COMPlayer : public Player
         //Random Shooting or Nah
         bool randomFire = true;
 
-        COMPlayer() : Player(true)
+        COMPlayer(int id) : Player(true, id)
         {}
 };

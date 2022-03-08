@@ -80,7 +80,7 @@ namespace ai
 			return;
 		}
 
-		srand(time(NULL));
+		srand(time(NULL) + (comPtr->id * 7));
 		bool complete = false;
 
 		//Was going to reset board if placing took too long, but I'm not going to worry about that right now

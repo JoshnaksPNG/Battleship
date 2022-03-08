@@ -312,10 +312,13 @@ class Player
             return "";
         }
 
+        int id;
+
         //Constructor
-        Player(bool comIn)
+        Player(bool comIn, int idIn)
         {
             com = comIn;
+            id = idIn;
         }
 
         //I don't know what this does, but it makes the error go bye-bye

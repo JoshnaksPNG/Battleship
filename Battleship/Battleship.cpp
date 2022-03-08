@@ -63,49 +63,6 @@ namespace battleshipGame
         return "";
     }
 
-    int nextTurn()
-    {
-        //Setup Turns
-        if (turn < 0)
-        {
-            setupTurn();
-        }
-        return 0;
-    }
-
-    int setupTurn()
-    {
-        //Placing Different Ships
-        switch (turn)
-        {
-            case -5:
-
-                break;
-
-            case -4:
-
-                break;
-
-            case -3:
-
-                break;
-
-            case -2:
-
-                break;
-
-            case -1:
-
-                break;
-
-            default:
-                break;
-        }
-
-        ++turn;
-        return 0;
-    }
-
     int placeShip(std::string input, int angle, PlayerPtr player, int turnIn)
     {
         //Get int Coordinates from "A1" "2C" "B 5" sort of input
@@ -317,13 +274,13 @@ namespace battleshipGame
                         toward->carShip->destr = true;
 
                         //Sinking Notification
-                        if (toward->com)
+                        if (toward->id == 1)
                         {
-                            std::cout << "You sunk your opponent's carrier!\n";
+                            std::cout << "COM2 sunk COM1's carrier!\n";
                         }
                         else
                         {
-                            std::cout << "Your opponent sunk your carrier!\n";
+                            std::cout << "COM1 sunk COM2's carrier!\n";
                         }
 
                         return 2;
@@ -331,13 +288,13 @@ namespace battleshipGame
                     } else
                     {
                         //Sinking Notification
-                        if (toward->com)
+                        if (toward->id == 1)
                         {
-                            std::cout << "You hit your opponent's carrier!\n";
+                            std::cout << "COM2 hit COM1's carrier!\n";
                         }
                         else
                         {
-                            std::cout << "Your opponent hit your carrier!\n";
+                            std::cout << "COM1 hit COM2's carrier!\n";
                         }
                     }
 
@@ -351,13 +308,13 @@ namespace battleshipGame
                         toward->batShip->destr = true;
 
                         //Sinking Notification
-                        if (toward->com)
+                        if (toward->id == 1)
                         {
-                            std::cout << "You sunk your opponent's battleship!\n";
+                            std::cout << "COM2 sunk COM1's battleship!\n";
                         }
                         else
                         {
-                            std::cout << "Your opponent sunk your battleship!\n";
+                            std::cout << "COM1 sunk COM2's battleship!\n";
                         }
 
                         return 2;
@@ -365,13 +322,13 @@ namespace battleshipGame
                     } else
                     {
                         //Sinking Notification
-                        if (toward->com)
+                        if (toward->id == 1)
                         {
-                            std::cout << "You hit your opponent's battleship!\n";
+                            std::cout << "COM2 hit COM1's battleship!\n";
                         }
                         else
                         {
-                            std::cout << "Your opponent hit your battleship!\n";
+                            std::cout << "COM1 hit COM2's battleship!\n";
                         }
                     }
                     break;
@@ -384,13 +341,13 @@ namespace battleshipGame
                         toward->cruiShip->destr = true;
 
                         //Sinking Notification
-                        if (toward->com)
+                        if (toward->id == 1)
                         {
-                            std::cout << "You sunk your opponent's cruiser!\n";
+                            std::cout << "COM2 sunk COM1's cruiser!\n";
                         }
                         else
                         {
-                            std::cout << "Your opponent sunk your cruiser!\n";
+                            std::cout << "COM1 sunk COM2's cruiser!\n";
                         }
 
                         return 2;
@@ -398,13 +355,13 @@ namespace battleshipGame
                     } else
                     {
                         //Sinking Notification
-                        if (toward->com)
+                        if (toward->id == 1)
                         {
-                            std::cout << "You hit your opponent's cruiser!\n";
+                            std::cout << "COM2 hit COM1's cruiser!\n";
                         }
                         else
                         {
-                            std::cout << "Your opponent hit your cruiser!\n";
+                            std::cout << "COM1 hit COM2's cruiser!\n";
                         }
                     }
                     break;
@@ -417,13 +374,13 @@ namespace battleshipGame
                         toward->subShip->destr = true;
 
                         //Sinking Notification
-                        if (toward->com)
+                        if (toward->id == 1)
                         {
-                            std::cout << "You sunk your opponent's submarine!\n";
+                            std::cout << "COM2 sunk COM1's submarine!\n";
                         }
                         else
                         {
-                            std::cout << "Your opponent sunk your submarine!\n";
+                            std::cout << "COM1 sunk COM2's submarine!\n";
                         }
 
                         return 2;
@@ -431,13 +388,13 @@ namespace battleshipGame
                     }else
                     {
                         //Sinking Notification
-                        if (toward->com)
+                        if (toward->id == 1)
                         {
-                            std::cout << "You hit your opponent's submarine!\n";
+                            std::cout << "COM2 hit COM1's submarine!\n";
                         }
                         else
                         {
-                            std::cout << "Your opponent hit your submarine!\n";
+                            std::cout << "COM1 hit COM2's submarine!\n";
                         }
                     }
                     break;
@@ -450,13 +407,13 @@ namespace battleshipGame
                         toward->desShip->destr = true;
 
                         //Sinking Notification
-                        if (toward->com)
+                        if (toward->id == 1)
                         {
-                            std::cout << "You sunk your opponent's destroyer!\n";
+                            std::cout << "COM2 sunk COM1's destroyer!\n";
                         }
                         else
                         {
-                            std::cout << "Your opponent sunk your destroyer!\n";
+                            std::cout << "COM1 sunk COM2's destroyer!\n";
                         }
 
                         return 2;
@@ -464,13 +421,13 @@ namespace battleshipGame
                     }else
                     {
                         //Sinking Notification
-                        if (toward->com)
+                        if (toward->id == 1)
                         {
-                            std::cout << "You hit your opponent's destroyer!\n";
+                            std::cout << "COM2 hit COM1's destroyer!\n";
                         }
                         else
                         {
-                            std::cout << "Your opponent hit your destroyer!\n";
+                            std::cout << "COM1 hit COM2's destroyer!\n";
                         }
                     }
                     break;
@@ -515,13 +472,13 @@ namespace battleshipGame
         {
             battleshipGame::gameOver = true;
             
-            if (target->com)
+            if (target->id == 1)
             {
-                std::cout << "You won the game!\n";
+                std::cout << "COM1 won the game!\n";
             }
             else
             {
-                std::cout << "You lost the game.\n";
+                std::cout << "COM2 won the game!\n";
             }
         }
     }
